@@ -131,7 +131,7 @@ ESTIMATORS = {
 def extract_estimator(estimator, file_name, xtest, ytest, keep):
     coef_ = estimator.coef_
     intercept_ = estimator.intercept_
-    np.savez_compressed("spdz_cifar/" + file_name + ".npz", coef_=coef_, intercept_=intercept_, xtest=xtest[:keep], ytest=ytest[:keep])
+    np.savez_compressed("spdz_models/" + file_name + ".npz", coef_=coef_, intercept_=intercept_, xtest=xtest[:keep], ytest=ytest[:keep])
 
 class ParamsFinder(object):
     def __init__(self, estimator, name):
