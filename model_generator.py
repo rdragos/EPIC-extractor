@@ -242,7 +242,7 @@ if __name__ == "__main__":
                         help="Common seed used by random number generator.")
     parser.add_argument('--path-prefix', nargs="?",
                         type=str,
-                        default="/volume1/scratch/drotaru/datasets/CIFAR10/",
+                        default="./datasets/CIFAR10/",
                         help="path of train and test data.")
     parser.add_argument('--param-finder', nargs='?', default=0, type=int,
                         help='set this to 1 if you want to do a grid search')
@@ -256,6 +256,9 @@ if __name__ == "__main__":
     parser.add_argument('--features_type', nargs='?', default='non-recursive', type=str,
                         help='whether do recursive feature lookup or predefined \
                         test/train batches as for CIFAR10')
+    parser.add_argument('--save_model', nargs='?', default=0, type=int,
+                        help='whether dump learnt model into .npz file')
+ 
   
     args = vars(parser.parse_args())
     # X_train, X_test, y_train, y_test = (np.array(_) for _ in process_mnist())
@@ -307,9 +310,10 @@ if __name__ == "__main__":
 
         if args['round_estimator'] == 1:
            extract_estimator(estimator.get_params('linearsvc')['linearsvc'], 'rbf_svm', X_test, y_test, 30)
-        # Un-comment this line if you want to save the model1
-        # extract_estimator(estimator, 'rbf_svm', X_test, y_test, 30)
-        # import ipdb; ipdb.set_trace()
+
+        save_model = args['save_model']
+        if save_model:
+            extract_estimator(estimator, 'rbf_svm', X_test, y_test, 30)
 
     if args['param_finder'] == 0:
         print()
