@@ -4,9 +4,9 @@ This is a helper for the feature extraction of datasets used in our paper: https
 
 It should extract Inception-v3 features from the following datasets:
 
-- [CIFAR-10]('http://www.cs.toronto.edu/~kriz/cifar.html')
-- [MIT-67]('http://web.mit.edu/torralba/www/indoor.html')
-- [Caltech101]('http://www.vision.caltech.edu/Image_Datasets/Caltech101/')
+- [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar.html)
+- [MIT-67](http://web.mit.edu/torralba/www/indoor.html)
+- [Caltech101](http://www.vision.caltech.edu/Image_Datasets/Caltech101/)
 
 
 In order to get the features in an easy-to-manipulate format (.npz) you
