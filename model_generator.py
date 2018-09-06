@@ -1,4 +1,3 @@
-from mnist import MNIST
 from sklearn import svm
 import numpy as np 
 import argparse
@@ -24,7 +23,7 @@ from sklearn.datasets import fetch_mldata
 from sklearn.utils import check_array
 
 class ImageNetExtractor(object):
-    def __init__(self, path_prefix, features_type):
+    def __init__(self, path_prefix, features_type, keep_training):
         func = None
         if features_type == 'recursive':
             func = process_imagenet_caltech
@@ -34,11 +33,11 @@ class ImageNetExtractor(object):
             raise Exception('Type of feature extraction incorrectly used \
                 See features_type flag')
         self.path_prefix = path_prefix
-        self.apply_func(func)
+        self.apply_func(func, keep_training)
 
-    def apply_func(self, feature_func):
+    def apply_func(self, feature_func, keep_training):
         x_train, x_test, y_train, y_test = \
-            feature_func(self.path_prefix)
+            feature_func(self.path_prefix, keep_training)
         self.x_train = x_train
         self.y_train = y_train
 
@@ -51,7 +50,7 @@ class ImageNetExtractor(object):
 
     def get_processed_features(self):
         return (np.array(_) for _ in self._get_data())
-    
+
 def process_imagenet_cifar(prefix=None):
     test_batch = np.load(prefix + 'test_batch.npz')
     batch = [None] * 1
@@ -263,7 +262,7 @@ if __name__ == "__main__":
     args = vars(parser.parse_args())
     # X_train, X_test, y_train, y_test = (np.array(_) for _ in process_mnist())
 
-    extractor = ImageNetExtractor(args['path_prefix'], args['features_type'])
+    extractor = ImageNetExtractor(args['path_prefix'], args['features_type'], args['keep-training'])
     X_train, X_test, y_train, y_test = extractor.get_processed_features()
     print("")
     print("Dataset statistics:")
